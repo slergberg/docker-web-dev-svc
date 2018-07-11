@@ -1,0 +1,309 @@
+version: "3.6"
+
+networks:
+  default:
+    external:
+      name: main
+
+services:
+  dynamodb:
+    image: arkdocker/web-utils-dynamodb
+    container_name: dynamodb.web-utils
+    restart: unless-stopped
+    environment:
+      - VIRTUAL_HOST=dynamodb.web-utils
+      - VIRTUAL_PORT=8000
+    depends_on:
+      - nginx-proxy
+    links:
+      - nginx-proxy
+    expose:
+      - "8000"
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./mnt/bridge:/mnt/bridge
+      - ./mnt/dynamodb/data:/data
+
+  dynamodb-admin:
+    image: arkdocker/web-utils-dynamodb-admin
+    container_name: dynamodb-admin.web-utils
+    restart: unless-stopped
+    environment:
+      - DYNAMO_ENDPOINT=http://dynamodb:8000
+      - VIRTUAL_HOST=dynamodb-admin.web-utils
+      - VIRTUAL_PORT=8001
+    depends_on:
+      - dynamodb
+      - nginx-proxy
+    links:
+      - dynamodb
+      - nginx-proxy
+    expose:
+      - "8001"
+    volumes:
+      - ./mnt/bridge:/mnt/bridge
+
+  mailcatcher:
+    image: arkdocker/web-utils-mailcatcher
+    container_name: mailcatcher.web-utils
+    restart: unless-stopped
+    environment:
+      - VIRTUAL_HOST=mailcatcher.web-utils
+      - VIRTUAL_PORT=1080
+    depends_on:
+      - nginx-proxy
+    links:
+      - nginx-proxy
+    expose:
+      - "25"
+      - "1080"
+    ports:
+      - "25:25"
+    volumes:
+      - ./mnt/bridge:/mnt/bridge
+
+  memcached:
+    image: arkdocker/web-utils-memcached
+    container_name: memcached.web-utils
+    restart: unless-stopped
+    expose:
+      - "11211"
+    ports:
+      - "11211:11211"
+    volumes:
+      - ./mnt/bridge:/mnt/bridge
+
+  minio:
+    image: arkdocker/web-utils-minio
+    container_name: minio.web-utils
+    restart: unless-stopped
+    environment:
+      - MINIO_ACCESS_KEY=123456789
+      - MINIO_SECRET_KEY=123456789
+      - VIRTUAL_HOST=minio.web-utils
+      - VIRTUAL_PORT=80
+    depends_on:
+      - nginx-proxy
+    links:
+      - nginx-proxy
+    expose:
+      - "80"
+    volumes:
+      - ./mnt/bridge:/mnt/bridge
+      - ./mnt/minio/config:/root/.minio
+      - ./mnt/minio/data:/data
+
+  mongo-express:
+    image: arkdocker/web-utils-mongo-express
+    container_name: mongo-express.web-utils
+    restart: unless-stopped
+    environment:
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=admin
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=admin
+      - ME_CONFIG_MONGODB_PORT=27017
+      - ME_CONFIG_MONGODB_SERVER=mongodb
+      - VIRTUAL_HOST=mongo-express.web-utils
+      - VIRTUAL_PORT=8081
+    depends_on:
+      - mongodb
+      - nginx-proxy
+    links:
+      - mongodb
+      - nginx-proxy
+    expose:
+      - "8081"
+    volumes:
+      - ./mnt/bridge:/mnt/bridge
+
+  mongodb:
+    image: arkdocker/web-utils-mongodb
+    container_name: mongodb.web-utils
+    restart: unless-stopped
+    environment:
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+      - MONGO_INITDB_ROOT_USERNAME=admin
+    expose:
+      - "27017"
+      - "27018"
+      - "27019"
+      - "28017"
+    ports:
+      - "27017:27017"
+      - "27018:27018"
+      - "27019:27019"
+      - "28017:28017"
+    volumes:
+      - ./mnt/bridge:/mnt/bridge
+      - /data/db
+
+  mysql:
+    image: arkdocker/web-utils-mysql
+    container_name: mysql.web-utils
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    expose:
+      - "3306"
+    ports:
+      - "3306:3306"
+      - "3307:3306"
+    volumes:
+      - ./mnt/bridge:/mnt/bridge
+      - ./mnt/mysql/data:/var/lib/mysql
+
+  nginx-proxy:
+    image: arkdocker/web-utils-nginx-proxy
+    container_name: nginx-proxy.web-utils
+    restart: unless-stopped
+    expose:
+      - "80"
+      - "443"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./mnt/bridge:/mnt/bridge
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+
+  pgadmin:
+    image: arkdocker/web-utils-pgadmin
+    container_name: pgadmin.web-utils
+    restart: unless-stopped
+    environment:
+      - MAIL_PASSWORD=
+      - MAIL_PORT=25
+      - MAIL_SERVER=mailcatcher
+      - MAIL_USERNAME=
+      - MAIL_USE_SSL=False
+      - VIRTUAL_HOST=pgadmin.web-utils
+      - VIRTUAL_PORT=5050
+    depends_on:
+      - mailcatcher
+      - postgres
+      - nginx-proxy
+    links:
+      - mailcatcher
+      - postgres
+      - nginx-proxy
+    expose:
+      - "5050"
+    volumes:
+      - ./mnt/bridge:/mnt/bridge
+      - ./mnt/pgadmin/data:/var/lib/pgadmin
+
+  phpmemadmin:
+    image: arkdocker/web-utils-phpmemadmin
+    container_name: phpmemadmin.web-utils
+    restart: unless-stopped
+    environment:
+      - VIRTUAL_HOST=phpmemadmin.web-utils
+      - VIRTUAL_PORT=80
+    depends_on:
+      - memcached
+      - nginx-proxy
+    links:
+      - memcached
+      - nginx-proxy
+    expose:
+      - "80"
+    volumes:
+      - ./mnt/bridge:/mnt/bridge
+
+  phpmyadmin:
+    image: arkdocker/web-utils-phpmyadmin
+    container_name: phpmyadmin.web-utils
+    restart: unless-stopped
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=mysql
+      - PMA_PASSWORD=root
+      - PMA_PORT=3306
+      - PMA_USER=root
+      - VIRTUAL_HOST=phpmyadmin.web-utils
+      - VIRTUAL_PORT=80
+    depends_on:
+      - mysql
+      - nginx-proxy
+    links:
+      - mysql
+      - nginx-proxy
+    expose:
+      - "80"
+    volumes:
+      - ./mnt/bridge:/mnt/bridge
+
+  portainer:
+    image: arkdocker/web-utils-portainer
+    container_name: portainer.web-utils
+    restart: unless-stopped
+    environment:
+      - VIRTUAL_HOST=portainer.web-utils
+      - VIRTUAL_PORT=9000
+    depends_on:
+      - nginx-proxy
+    links:
+      - nginx-proxy
+    expose:
+      - "9000"
+    volumes:
+      - ./mnt/bridge:/mnt/bridge
+      - ./mnt/portainer/data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  postgres:
+    image: arkdocker/web-utils-postgres
+    container_name: postgres.web-utils
+    restart: unless-stopped
+    environment:
+      - PGDATA=/var/lib/postgresql/data/pgdata
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+    expose:
+      - "5432"
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./mnt/bridge:/mnt/bridge
+      - ./mnt/postgres/data:/var/lib/postgresql/data/pgdata
+
+  redis:
+    image: arkdocker/web-utils-redis
+    container_name: redis.web-utils
+    restart: unless-stopped
+    environment:
+      - REDIS_PASSWORD=root
+    expose:
+      - "6379"
+      - "16379"
+      - "26379"
+    ports:
+      - "6379:6379"
+      - "16379:16379"
+      - "26379:26379"
+    volumes:
+      - ./mnt/bridge:/mnt/bridge
+      - ./mnt/redis/data:/data
+
+  redis-commander:
+    image: arkdocker/web-utils-redis-commander
+    container_name: redis-commander.web-utils
+    restart: unless-stopped
+    environment:
+      - REDIS_DB=0
+      - REDIS_HOST=redis
+      - REDIS_NAME=redis
+      - REDIS_PASSWORD=root
+      - REDIS_PORT=6379
+      - VIRTUAL_HOST=redis-commander.web-utils
+      - VIRTUAL_PORT=8081
+    depends_on:
+      - redis
+      - nginx-proxy
+    links:
+      - redis
+      - nginx-proxy
+    expose:
+      - "8081"
+    volumes:
+      - ./mnt/bridge:/mnt/bridge
