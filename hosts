@@ -1,10 +1,10 @@
-127.0.0.1       dynamodb.web-utils                              # Web Utils - DynamoDB
-127.0.0.1       dynamodb-admin.web-utils                        # Web Utils - DynamoDB Admin
-127.0.0.1       mailcatcher.web-utils                           # Web Utils - Mailcatcher
-127.0.0.1       minio.web-utils                                 # Web Utils - Minio
-127.0.0.1       mongo-express.web-utils                         # Web Utils - Mongo Express
-127.0.0.1       pgadmin.web-utils                               # Web Utils - pgadmin
-127.0.0.1       phpmemadmin.web-utils                           # Web Utils - phpMemAdmin
-127.0.0.1       phpmyadmin.web-utils                            # Web Utils - phpMyAdmin
-127.0.0.1       portainer.web-utils                             # Web Utils - Portainer
-127.0.0.1       redis-commander.web-utils                       # Web Utils - Redis Commander
+127.0.0.1       dynamodb.web-dev-svc            # Web Dev Svc - DynamoDB
+127.0.0.1       dynamodb-admin.web-dev-svc      # Web Dev Svc - DynamoDB Admin
+127.0.0.1       mailcatcher.web-dev-svc         # Web Dev Svc - Mailcatcher
+127.0.0.1       minio.web-dev-svc               # Web Dev Svc - Minio
+127.0.0.1       mongo-express.web-dev-svc       # Web Dev Svc - Mongo Express
+127.0.0.1       pgadmin.web-dev-svc             # Web Dev Svc - pgadmin
+127.0.0.1       phpmemadmin.web-dev-svc         # Web Dev Svc - phpMemAdmin
+127.0.0.1       phpmyadmin.web-dev-svc          # Web Dev Svc - phpMyAdmin
+127.0.0.1       portainer.web-dev-svc           # Web Dev Svc - Portainer
+127.0.0.1       redis-commander.web-dev-svc     # Web Dev Svc - Redis Commander

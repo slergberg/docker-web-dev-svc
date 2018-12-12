@@ -1,4 +1,4 @@
-version: "3.6"
+version: "3"
 
 networks:
   default:
@@ -7,11 +7,11 @@ networks:
 
 services:
   dynamodb:
-    image: arkdocker/web-utils-dynamodb
-    container_name: dynamodb.web-utils
+    image: webdevsvc/dynamodb
+    container_name: dynamodb.web-dev-svc
     restart: unless-stopped
     environment:
-      - VIRTUAL_HOST=dynamodb.web-utils
+      - VIRTUAL_HOST=dynamodb.web-dev-svc
       - VIRTUAL_PORT=8000
     depends_on:
       - nginx-proxy
@@ -26,12 +26,12 @@ services:
       - ./mnt/dynamodb/data:/data
 
   dynamodb-admin:
-    image: arkdocker/web-utils-dynamodb-admin
-    container_name: dynamodb-admin.web-utils
+    image: webdevsvc/dynamodb-admin
+    container_name: dynamodb-admin.web-dev-svc
     restart: unless-stopped
     environment:
       - DYNAMO_ENDPOINT=http://dynamodb:8000
-      - VIRTUAL_HOST=dynamodb-admin.web-utils
+      - VIRTUAL_HOST=dynamodb-admin.web-dev-svc
       - VIRTUAL_PORT=8001
     depends_on:
       - dynamodb
@@ -45,11 +45,11 @@ services:
       - ./mnt/bridge:/mnt/bridge
 
   mailcatcher:
-    image: arkdocker/web-utils-mailcatcher
-    container_name: mailcatcher.web-utils
+    image: webdevsvc/mailcatcher
+    container_name: mailcatcher.web-dev-svc
     restart: unless-stopped
     environment:
-      - VIRTUAL_HOST=mailcatcher.web-utils
+      - VIRTUAL_HOST=mailcatcher.web-dev-svc
       - VIRTUAL_PORT=1080
     depends_on:
       - nginx-proxy
@@ -64,8 +64,8 @@ services:
       - ./mnt/bridge:/mnt/bridge
 
   memcached:
-    image: arkdocker/web-utils-memcached
-    container_name: memcached.web-utils
+    image: webdevsvc/memcached
+    container_name: memcached.web-dev-svc
     restart: unless-stopped
     expose:
       - "11211"
@@ -75,13 +75,13 @@ services:
       - ./mnt/bridge:/mnt/bridge
 
   minio:
-    image: arkdocker/web-utils-minio
-    container_name: minio.web-utils
+    image: webdevsvc/minio
+    container_name: minio.web-dev-svc
     restart: unless-stopped
     environment:
       - MINIO_ACCESS_KEY=123456789
       - MINIO_SECRET_KEY=123456789
-      - VIRTUAL_HOST=minio.web-utils
+      - VIRTUAL_HOST=minio.web-dev-svc
       - VIRTUAL_PORT=80
     depends_on:
       - nginx-proxy
@@ -95,15 +95,15 @@ services:
       - ./mnt/minio/data:/data
 
   mongo-express:
-    image: arkdocker/web-utils-mongo-express
-    container_name: mongo-express.web-utils
+    image: webdevsvc/mongo-express
+    container_name: mongo-express.web-dev-svc
     restart: unless-stopped
     environment:
       - ME_CONFIG_MONGODB_ADMINPASSWORD=admin
       - ME_CONFIG_MONGODB_ADMINUSERNAME=admin
       - ME_CONFIG_MONGODB_PORT=27017
       - ME_CONFIG_MONGODB_SERVER=mongodb
-      - VIRTUAL_HOST=mongo-express.web-utils
+      - VIRTUAL_HOST=mongo-express.web-dev-svc
       - VIRTUAL_PORT=8081
     depends_on:
       - mongodb
@@ -117,8 +117,8 @@ services:
       - ./mnt/bridge:/mnt/bridge
 
   mongodb:
-    image: arkdocker/web-utils-mongodb
-    container_name: mongodb.web-utils
+    image: webdevsvc/mongodb
+    container_name: mongodb.web-dev-svc
     restart: unless-stopped
     environment:
       - MONGO_INITDB_ROOT_PASSWORD=admin
@@ -138,8 +138,8 @@ services:
       - /data/db
 
   mysql:
-    image: arkdocker/web-utils-mysql
-    container_name: mysql.web-utils
+    image: webdevsvc/mysql
+    container_name: mysql.web-dev-svc
     restart: unless-stopped
     environment:
       - MYSQL_ROOT_PASSWORD=root
@@ -153,8 +153,8 @@ services:
       - ./mnt/mysql/data:/var/lib/mysql
 
   nginx-proxy:
-    image: arkdocker/web-utils-nginx-proxy
-    container_name: nginx-proxy.web-utils
+    image: webdevsvc/nginx-proxy
+    container_name: nginx-proxy.web-dev-svc
     restart: unless-stopped
     expose:
       - "80"
@@ -167,8 +167,8 @@ services:
       - /var/run/docker.sock:/tmp/docker.sock:ro
 
   pgadmin:
-    image: arkdocker/web-utils-pgadmin
-    container_name: pgadmin.web-utils
+    image: webdevsvc/pgadmin
+    container_name: pgadmin.web-dev-svc
     restart: unless-stopped
     environment:
       - MAIL_PASSWORD=
@@ -176,7 +176,7 @@ services:
       - MAIL_SERVER=mailcatcher
       - MAIL_USERNAME=
       - MAIL_USE_SSL=False
-      - VIRTUAL_HOST=pgadmin.web-utils
+      - VIRTUAL_HOST=pgadmin.web-dev-svc
       - VIRTUAL_PORT=5050
     depends_on:
       - mailcatcher
@@ -193,11 +193,11 @@ services:
       - ./mnt/pgadmin/data:/var/lib/pgadmin
 
   phpmemadmin:
-    image: arkdocker/web-utils-phpmemadmin
-    container_name: phpmemadmin.web-utils
+    image: webdevsvc/phpmemadmin
+    container_name: phpmemadmin.web-dev-svc
     restart: unless-stopped
     environment:
-      - VIRTUAL_HOST=phpmemadmin.web-utils
+      - VIRTUAL_HOST=phpmemadmin.web-dev-svc
       - VIRTUAL_PORT=80
     depends_on:
       - memcached
@@ -211,8 +211,8 @@ services:
       - ./mnt/bridge:/mnt/bridge
 
   phpmyadmin:
-    image: arkdocker/web-utils-phpmyadmin
-    container_name: phpmyadmin.web-utils
+    image: webdevsvc/phpmyadmin
+    container_name: phpmyadmin.web-dev-svc
     restart: unless-stopped
     environment:
       - PMA_ARBITRARY=1
@@ -220,7 +220,7 @@ services:
       - PMA_PASSWORD=root
       - PMA_PORT=3306
       - PMA_USER=root
-      - VIRTUAL_HOST=phpmyadmin.web-utils
+      - VIRTUAL_HOST=phpmyadmin.web-dev-svc
       - VIRTUAL_PORT=80
     depends_on:
       - mysql
@@ -234,11 +234,11 @@ services:
       - ./mnt/bridge:/mnt/bridge
 
   portainer:
-    image: arkdocker/web-utils-portainer
-    container_name: portainer.web-utils
+    image: webdevsvc/portainer
+    container_name: portainer.web-dev-svc
     restart: unless-stopped
     environment:
-      - VIRTUAL_HOST=portainer.web-utils
+      - VIRTUAL_HOST=portainer.web-dev-svc
       - VIRTUAL_PORT=9000
     depends_on:
       - nginx-proxy
@@ -252,8 +252,8 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
 
   postgres:
-    image: arkdocker/web-utils-postgres
-    container_name: postgres.web-utils
+    image: webdevsvc/postgres
+    container_name: postgres.web-dev-svc
     restart: unless-stopped
     environment:
       - PGDATA=/var/lib/postgresql/data/pgdata
@@ -268,8 +268,8 @@ services:
       - ./mnt/postgres/data:/var/lib/postgresql/data/pgdata
 
   redis:
-    image: arkdocker/web-utils-redis
-    container_name: redis.web-utils
+    image: webdevsvc/redis
+    container_name: redis.web-dev-svc
     restart: unless-stopped
     environment:
       - REDIS_PASSWORD=root
@@ -286,8 +286,8 @@ services:
       - ./mnt/redis/data:/data
 
   redis-commander:
-    image: arkdocker/web-utils-redis-commander
-    container_name: redis-commander.web-utils
+    image: webdevsvc/redis-commander
+    container_name: redis-commander.web-dev-svc
     restart: unless-stopped
     environment:
       - REDIS_DB=0
@@ -295,7 +295,7 @@ services:
       - REDIS_NAME=redis
       - REDIS_PASSWORD=root
       - REDIS_PORT=6379
-      - VIRTUAL_HOST=redis-commander.web-utils
+      - VIRTUAL_HOST=redis-commander.web-dev-svc
       - VIRTUAL_PORT=8081
     depends_on:
       - redis
