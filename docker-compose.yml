@@ -44,6 +44,26 @@ services:
     volumes:
       - ./mnt/bridge:/mnt/bridge
 
+  jaegertracing:
+    image: webdevsvc/jaegertracing
+    container_name: jaegertracing.web-dev-svc
+    restart: unless-stopped
+    environment:
+      - VIRTUAL_HOST=jaegertracing.web-dev-svc
+      - VIRTUAL_PORT=16686
+    links:
+      - nginx-proxy
+    expose:
+      - "5775/udp"
+      - "5778"
+      - "6831/udp"
+      - "6832/udp"
+      - "9411"
+      - "14268"
+      - "16686"
+    volumes:
+      - ./mnt/bridge:/mnt/bridge
+
   mailcatcher:
     image: webdevsvc/mailcatcher
     container_name: mailcatcher.web-dev-svc
