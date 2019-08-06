@@ -11,7 +11,7 @@ services:
     container_name: dynamodb.web-dev-svc
     restart: unless-stopped
     environment:
-      - VIRTUAL_HOST=dynamodb.web-dev-svc
+      - VIRTUAL_HOST=dynamodb.web-dev-svc.localhost
       - VIRTUAL_PORT=8000
     depends_on:
       - nginx-proxy
@@ -31,7 +31,7 @@ services:
     restart: unless-stopped
     environment:
       - DYNAMO_ENDPOINT=http://dynamodb:8000
-      - VIRTUAL_HOST=dynamodb-admin.web-dev-svc
+      - VIRTUAL_HOST=dynamodb-admin.web-dev-svc.localhost
       - VIRTUAL_PORT=8001
     depends_on:
       - dynamodb
@@ -49,7 +49,7 @@ services:
     container_name: jaegertracing.web-dev-svc
     restart: unless-stopped
     environment:
-      - VIRTUAL_HOST=jaegertracing.web-dev-svc
+      - VIRTUAL_HOST=jaegertracing.web-dev-svc.localhost
       - VIRTUAL_PORT=16686
     links:
       - nginx-proxy
@@ -69,7 +69,7 @@ services:
     container_name: mailcatcher.web-dev-svc
     restart: unless-stopped
     environment:
-      - VIRTUAL_HOST=mailcatcher.web-dev-svc
+      - VIRTUAL_HOST=mailcatcher.web-dev-svc.localhost
       - VIRTUAL_PORT=1080
     depends_on:
       - nginx-proxy
@@ -101,7 +101,7 @@ services:
     environment:
       - MINIO_ACCESS_KEY=123456789
       - MINIO_SECRET_KEY=123456789
-      - VIRTUAL_HOST=minio.web-dev-svc
+      - VIRTUAL_HOST=minio.web-dev-svc.localhost
       - VIRTUAL_PORT=80
     depends_on:
       - nginx-proxy
@@ -123,7 +123,7 @@ services:
       - ME_CONFIG_MONGODB_ADMINUSERNAME=admin
       - ME_CONFIG_MONGODB_PORT=27017
       - ME_CONFIG_MONGODB_SERVER=mongodb
-      - VIRTUAL_HOST=mongo-express.web-dev-svc
+      - VIRTUAL_HOST=mongo-express.web-dev-svc.localhost
       - VIRTUAL_PORT=8081
     depends_on:
       - mongodb
@@ -196,7 +196,7 @@ services:
       - MAIL_SERVER=mailcatcher
       - MAIL_USERNAME=
       - MAIL_USE_SSL=False
-      - VIRTUAL_HOST=pgadmin.web-dev-svc
+      - VIRTUAL_HOST=pgadmin.web-dev-svc.localhost
       - VIRTUAL_PORT=5050
     depends_on:
       - mailcatcher
@@ -217,7 +217,7 @@ services:
     container_name: phpmemadmin.web-dev-svc
     restart: unless-stopped
     environment:
-      - VIRTUAL_HOST=phpmemadmin.web-dev-svc
+      - VIRTUAL_HOST=phpmemadmin.web-dev-svc.localhost
       - VIRTUAL_PORT=80
     depends_on:
       - memcached
@@ -240,7 +240,7 @@ services:
       - PMA_PASSWORD=root
       - PMA_PORT=3306
       - PMA_USER=root
-      - VIRTUAL_HOST=phpmyadmin.web-dev-svc
+      - VIRTUAL_HOST=phpmyadmin.web-dev-svc.localhost
       - VIRTUAL_PORT=80
     depends_on:
       - mysql
@@ -258,7 +258,7 @@ services:
     container_name: portainer.web-dev-svc
     restart: unless-stopped
     environment:
-      - VIRTUAL_HOST=portainer.web-dev-svc
+      - VIRTUAL_HOST=portainer.web-dev-svc.localhost
       - VIRTUAL_PORT=9000
     depends_on:
       - nginx-proxy
@@ -315,7 +315,7 @@ services:
       - REDIS_NAME=redis
       - REDIS_PASSWORD=root
       - REDIS_PORT=6379
-      - VIRTUAL_HOST=redis-commander.web-dev-svc
+      - VIRTUAL_HOST=redis-commander.web-dev-svc.localhost
       - VIRTUAL_PORT=8081
     depends_on:
       - redis
