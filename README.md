@@ -1,7 +1,8 @@
-# USEFUL CONTAINERS FOR WEB DEVELOPMENT
+# Useful containers for local web development
 
 - dynamodb
 - dynamodb-admin
+- jaegertracing
 - mailcatcher
 - memcached
 - minio
