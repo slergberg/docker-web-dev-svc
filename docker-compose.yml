@@ -8,7 +8,7 @@ networks:
 services:
   dynamodb:
     image: webdevsvc/dynamodb
-    container_name: dynamodb.web-dev-svc
+    container_name: dynamodb.web-dev-svc.localhost
     restart: unless-stopped
     environment:
       - VIRTUAL_HOST=dynamodb.web-dev-svc.localhost
@@ -27,7 +27,7 @@ services:
 
   dynamodb-admin:
     image: webdevsvc/dynamodb-admin
-    container_name: dynamodb-admin.web-dev-svc
+    container_name: dynamodb-admin.web-dev-svc.localhost
     restart: unless-stopped
     environment:
       - DYNAMO_ENDPOINT=http://dynamodb:8000
@@ -46,7 +46,7 @@ services:
 
   jaegertracing:
     image: webdevsvc/jaegertracing
-    container_name: jaegertracing.web-dev-svc
+    container_name: jaegertracing.web-dev-svc.localhost
     restart: unless-stopped
     environment:
       - VIRTUAL_HOST=jaegertracing.web-dev-svc.localhost
@@ -66,7 +66,7 @@ services:
 
   mailcatcher:
     image: webdevsvc/mailcatcher
-    container_name: mailcatcher.web-dev-svc
+    container_name: mailcatcher.web-dev-svc.localhost
     restart: unless-stopped
     environment:
       - VIRTUAL_HOST=mailcatcher.web-dev-svc.localhost
@@ -85,7 +85,7 @@ services:
 
   memcached:
     image: webdevsvc/memcached
-    container_name: memcached.web-dev-svc
+    container_name: memcached.web-dev-svc.localhost
     restart: unless-stopped
     expose:
       - "11211"
@@ -96,7 +96,7 @@ services:
 
   minio:
     image: webdevsvc/minio
-    container_name: minio.web-dev-svc
+    container_name: minio.web-dev-svc.localhost
     restart: unless-stopped
     environment:
       - MINIO_ACCESS_KEY=123456789
@@ -116,7 +116,7 @@ services:
 
   mongo-express:
     image: webdevsvc/mongo-express
-    container_name: mongo-express.web-dev-svc
+    container_name: mongo-express.web-dev-svc.localhost
     restart: unless-stopped
     environment:
       - ME_CONFIG_MONGODB_ADMINPASSWORD=admin
@@ -138,7 +138,7 @@ services:
 
   mongodb:
     image: webdevsvc/mongodb
-    container_name: mongodb.web-dev-svc
+    container_name: mongodb.web-dev-svc.localhost
     restart: unless-stopped
     environment:
       - MONGO_INITDB_ROOT_PASSWORD=admin
@@ -159,7 +159,7 @@ services:
 
   mysql:
     image: webdevsvc/mysql
-    container_name: mysql.web-dev-svc
+    container_name: mysql.web-dev-svc.localhost
     restart: unless-stopped
     environment:
       - MYSQL_ROOT_PASSWORD=root
@@ -174,7 +174,7 @@ services:
 
   nginx-proxy:
     image: webdevsvc/nginx-proxy
-    container_name: nginx-proxy.web-dev-svc
+    container_name: nginx-proxy.web-dev-svc.localhost
     restart: unless-stopped
     expose:
       - "80"
@@ -188,7 +188,7 @@ services:
 
   pgadmin:
     image: webdevsvc/pgadmin
-    container_name: pgadmin.web-dev-svc
+    container_name: pgadmin.web-dev-svc.localhost
     restart: unless-stopped
     environment:
       - MAIL_PASSWORD=
@@ -214,7 +214,7 @@ services:
 
   phpmemadmin:
     image: webdevsvc/phpmemadmin
-    container_name: phpmemadmin.web-dev-svc
+    container_name: phpmemadmin.web-dev-svc.localhost
     restart: unless-stopped
     environment:
       - VIRTUAL_HOST=phpmemadmin.web-dev-svc.localhost
@@ -232,7 +232,7 @@ services:
 
   phpmyadmin:
     image: webdevsvc/phpmyadmin
-    container_name: phpmyadmin.web-dev-svc
+    container_name: phpmyadmin.web-dev-svc.localhost
     restart: unless-stopped
     environment:
       - PMA_ARBITRARY=1
@@ -255,7 +255,7 @@ services:
 
   portainer:
     image: webdevsvc/portainer
-    container_name: portainer.web-dev-svc
+    container_name: portainer.web-dev-svc.localhost
     restart: unless-stopped
     environment:
       - VIRTUAL_HOST=portainer.web-dev-svc.localhost
@@ -273,7 +273,7 @@ services:
 
   postgres:
     image: webdevsvc/postgres
-    container_name: postgres.web-dev-svc
+    container_name: postgres.web-dev-svc.localhost
     restart: unless-stopped
     environment:
       - PGDATA=/var/lib/postgresql/data/pgdata
@@ -289,7 +289,7 @@ services:
 
   redis:
     image: webdevsvc/redis
-    container_name: redis.web-dev-svc
+    container_name: redis.web-dev-svc.localhost
     restart: unless-stopped
     environment:
       - REDIS_PASSWORD=root
@@ -307,7 +307,7 @@ services:
 
   redis-commander:
     image: webdevsvc/redis-commander
-    container_name: redis-commander.web-dev-svc
+    container_name: redis-commander.web-dev-svc.localhost
     restart: unless-stopped
     environment:
       - REDIS_DB=0
