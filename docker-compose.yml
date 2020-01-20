@@ -184,6 +184,7 @@ services:
       - "80:80"
       - "443:443"
     volumes:
+      - ./mnt/nginx-proxy/vhost.d:/etc/nginx/vhost.d:ro
       - ./mnt/bridge:/mnt/bridge
       - /var/run/docker.sock:/tmp/docker.sock:ro
 
