@@ -167,7 +167,6 @@ services:
       - "3306"
     ports:
       - "3306:3306"
-      - "3307:3306"
     volumes:
       - ./mnt/bridge:/mnt/bridge
       - ./mnt/mysql/data:/var/lib/mysql
