@@ -6,6 +6,26 @@ networks:
       name: main
 
 services:
+  dapr-placement:
+    image: webdevsvc/dapr-placement
+    container_name: dapr-placement.web-dev-svc.localhost
+    restart: unless-stopped
+    environment:
+      - VIRTUAL_HOST=dapr-placement.web-dev-svc.localhost
+      - VIRTUAL_PORT=50005
+    depends_on:
+      - nginx-proxy
+    links:
+      - nginx-proxy
+    expose:
+      - "3500"
+      - "7777"
+      - "9090"
+      - "50001"
+      - "50005"
+    volumes:
+      - ./mnt/bridge:/mnt/bridge
+
   dynamodb:
     image: webdevsvc/dynamodb
     container_name: dynamodb.web-dev-svc.localhost
