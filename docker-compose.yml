@@ -329,3 +329,20 @@ services:
       - "8081"
     volumes:
       - ./mnt/bridge:/mnt/bridge
+
+  zipkin:
+    image: webdevsvc/zipkin
+    container_name: zipkin.web-dev-svc.localhost
+    restart: unless-stopped
+    environment:
+      - VIRTUAL_HOST=zipkin.web-dev-svc.localhost
+      - VIRTUAL_PORT=9411
+    depends_on:
+      - nginx-proxy
+    links:
+      - nginx-proxy
+    expose:
+      - "9410"
+      - "9411"
+    volumes:
+      - ./mnt/bridge:/mnt/bridge
