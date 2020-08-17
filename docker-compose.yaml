@@ -27,8 +27,6 @@ services:
       - "9090:9090"
       - "50001:50001"
       - "50005:50005"
-    volumes:
-      - ./mnt/bridge:/mnt/bridge
 
   dynamodb:
     image: webdevsvc/dynamodb
@@ -44,7 +42,6 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./mnt/bridge:/mnt/bridge
       - ./mnt/dynamodb/data:/data
 
   dynamodb-admin:
@@ -60,8 +57,6 @@ services:
       - nginx-proxy
     expose:
       - "8001"
-    volumes:
-      - ./mnt/bridge:/mnt/bridge
 
   jaegertracing:
     image: webdevsvc/jaegertracing
@@ -78,8 +73,6 @@ services:
       - "9411"
       - "14268"
       - "16686"
-    volumes:
-      - ./mnt/bridge:/mnt/bridge
 
   mailcatcher:
     image: webdevsvc/mailcatcher
@@ -95,8 +88,6 @@ services:
       - "1080"
     ports:
       - "25:25"
-    volumes:
-      - ./mnt/bridge:/mnt/bridge
 
   memcached:
     image: webdevsvc/memcached
@@ -106,8 +97,6 @@ services:
       - "11211"
     ports:
       - "11211:11211"
-    volumes:
-      - ./mnt/bridge:/mnt/bridge
 
   minio:
     image: webdevsvc/minio
@@ -123,7 +112,6 @@ services:
     expose:
       - "80"
     volumes:
-      - ./mnt/bridge:/mnt/bridge
       - ./mnt/minio/config:/root/.minio
       - ./mnt/minio/data:/data
 
@@ -143,8 +131,6 @@ services:
       - nginx-proxy
     expose:
       - "8081"
-    volumes:
-      - ./mnt/bridge:/mnt/bridge
 
   mongodb:
     image: webdevsvc/mongodb
@@ -164,7 +150,6 @@ services:
       - "27019:27019"
       - "28017:28017"
     volumes:
-      - ./mnt/bridge:/mnt/bridge
       - /data/db
 
   mysql:
@@ -178,7 +163,6 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./mnt/bridge:/mnt/bridge
       - ./mnt/mysql/data:/var/lib/mysql
     command:
       - --default-authentication-plugin=mysql_native_password
@@ -195,7 +179,6 @@ services:
       - "443:443"
     volumes:
       - ./mnt/nginx-proxy/vhost.d:/etc/nginx/vhost.d:ro
-      - ./mnt/bridge:/mnt/bridge
       - /var/run/docker.sock:/tmp/docker.sock:ro
 
   pgadmin:
@@ -217,7 +200,6 @@ services:
     expose:
       - "5050"
     volumes:
-      - ./mnt/bridge:/mnt/bridge
       - ./mnt/pgadmin/data:/var/lib/pgadmin
 
   phpmemadmin:
@@ -232,8 +214,6 @@ services:
       - nginx-proxy
     expose:
       - "80"
-    volumes:
-      - ./mnt/bridge:/mnt/bridge
 
   phpmyadmin:
     image: webdevsvc/phpmyadmin
@@ -252,8 +232,6 @@ services:
       - nginx-proxy
     expose:
       - "80"
-    volumes:
-      - ./mnt/bridge:/mnt/bridge
 
   portainer:
     image: webdevsvc/portainer
@@ -267,7 +245,6 @@ services:
     expose:
       - "9000"
     volumes:
-      - ./mnt/bridge:/mnt/bridge
       - ./mnt/portainer/data:/data
       - /var/run/docker.sock:/var/run/docker.sock
 
@@ -284,7 +261,6 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ./mnt/bridge:/mnt/bridge
       - ./mnt/postgres/data:/var/lib/postgresql/data/pgdata
 
   redis:
@@ -302,7 +278,6 @@ services:
       - "16379:16379"
       - "26379:26379"
     volumes:
-      - ./mnt/bridge:/mnt/bridge
       - ./mnt/redis/data:/data
 
   redis-commander:
@@ -322,8 +297,6 @@ services:
       - nginx-proxy
     expose:
       - "8081"
-    volumes:
-      - ./mnt/bridge:/mnt/bridge
 
   zipkin:
     image: webdevsvc/zipkin
@@ -337,5 +310,3 @@ services:
     expose:
       - "9410"
       - "9411"
-    volumes:
-      - ./mnt/bridge:/mnt/bridge
