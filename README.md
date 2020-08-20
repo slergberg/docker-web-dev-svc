@@ -16,6 +16,17 @@ The following services/containers are available:
 - [Postgres](#Postgres)
 - [Redis](#Redis)
 
+It's pretty easy to get up and running by following these steps:
+
+1. Clone this repository to your local Docker environment.
+2. `cd` into the cloned repository and run `docker-compose up -d` for the services that you want, e.g.:
+
+```
+user@ubuntu:~$ docker-compose up -d mysql portainer
+```
+
+3. Check out each service's section on this README file in order to access the available endpoints.
+
 ## DynamoDB
 
 Amazon DynamoDB is a key-value and document database that delivers single-digit
